@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script>
+        function registerClick()
+        {
+            var customerName=document.getElementById("customerName").value;     //name
+            var checkinDate=document.getElementById("checkinDate").value;       //date
+            var noofDays=parseInt(document.getElementById("noofDays").value);   //days
+            var noofPersons=parseInt(document.getElementById("noofPersons").value);//persons
+            var optDeluxe=document.getElementById("optDeluxe");            //roomtype
+            var optSuite=document.getElementById("optSuite");               //roomtype
+            var optAC=document.getElementById("optAC");                     //ac
+            var optLocker=document.getElementById("optLocker");             //locker
+            var advanceAmount=parseInt(document.getElementById("advanceAmount").value); //advance amount
+            
+            
+        
+
+            
+            
+
+            //assigning ==
+            var dcustomerName=document.getElementById("dcustomerName");   //name
+            var dcheckinDate=document.getElementById("dcheckinDate");       //date checkin
+             var ddate=document.getElementById("ddays");                    //days
+            var dpersons=document.getElementById("dpersons");               //persons
+            var droomType=document.getElementById("droomType");             //room type
+            var dadvance=document.getElementById("dadvance");
+            var Tm=document.getElementById("Tm");
+
+
+           
+                                        //calculation
+
+
+            var roomcost=0;
+            if(optDeluxe.checked){                                  //rooms cost
+                roomcost=2500;
+            }else if(optSuite.checked){
+                roomcost=4000;
+
+            }
+
+            var amenities=0;
+            if((optAC.checked && optLocker.checked)){
+                amenities=1000+300;
+            }else if(optAC.checked){                                             //Amenities cost
+                amenities=1000;
+            }else if(optLocker.checked){
+                amenities+=300;
+            }
+
+            if(noofPersons<=2){
+                Tm=(roomcost+amenities)*noofDays||"";                     //persons cost calculation
+            }else{
+                
+               var extra=noofPersons-2;
+                Tm=((roomcost+amenities)+extra*1000)*noofDays||"";
+            }
+
+
+            
+
+
+
+
+                                                  //      validations for not inputing data
+
+
+            if(customerName==""){
+                document.getElementById("namer").style.display="block";     
+                document.getElementById("customerName").focus();            //name validation
+                return;
+            }
+            else{
+                document.getElementById("namer").style.display="none";
+            }
+
+
+            if(checkinDate==""){
+                document.getElementById("checkinr").style.display="block";
+                document.getElementById("checkinDate").focus();                      //checkin date validation    
+                return;   
+                
+                
+            }else{
+                document.getElementById("checkinr").style.display="none";
+
+            }
+
+
+            if(isNaN(noofDays)){
+                document.getElementById("daysr").style.display="block";
+                document.getElementById("noofDays").focus();                      //days validation       
+                ddays.innerHTML="";
+                return;
+            }else{
+                document.getElementById("daysr").style.display="none";
+
+            }
+
+            if(noofDays<1 || noofDays>4){                                        //maxdays 
+                document.getElementById("daysr").style.display="block";
+                document.getElementById("daysr").innerHTML="Kindly select a stay of 1 to 4 days";
+                document.getElementById("noofDays").focus(); 
+                return;
+            }
+
+            if(isNaN(noofPersons)){
+                document.getElementById("personsr").style.display="block";
+                document.getElementById("noofPersons").focus();                      //persons validation       
+                dpersons.innerHTML="";
+                return;
+                
+            }else{
+                document.getElementById("personsr").style.display="none";
+
+            }                                                                       //max persons validation
+           if(noofPersons < 1 || noofPersons > 4){
+                document.getElementById("personsr").style.display="block";
+                document.getElementById("personsr").innerHTML="Maximum 4 persons only";
+                document.getElementById("noofPersons").focus(); 
+                return;
+            }else{
+                document.getElementById("personsr").style.display="none";
+
+            } 
+
+
+            if(!optDeluxe.checked && !optSuite.checked){                               //room type validation
+                alert("Please select Room Type");
+                document.getElementById("optSuite").focus();
+                document.getElementById("r").style.border="2px solid red";
+                return;
+            } else{
+                document.getElementById("r").style.backgroundColor="";
+            }
+
+
+
+            if(isNaN(advanceAmount)){
+                document.getElementById("amtr").style.display="block";
+                document.getElementById("advanceAmount").focus();                      //advance amount validation       
+                dadvance.innerHTML="";
+                return;
+                
+
+                
+            }else{
+                document.getElementById("amtr").style.display="none";
+
+            }
+
+             //result display
+
+             dcustomerName.innerHTML=customerName;   //name
+            dcheckinDate.innerHTML=checkinDate;     //date
+            dpersons.innerHTML=noofPersons||"";         //persons
+            ddate.innerHTML=noofDays||"";               //days
+            dadvance.innerHTML=advanceAmount||"";       //Avance
+
+            if((optAC.checked && optLocker.checked)){
+                damenities.innerHTML=`${optAC.value} and ${optLocker.value}`;
+            }else if(optAC.checked){                                             //Amenities
+                damenities.innerHTML=optAC.value;
+            }else if(optLocker.checked){
+                damenities.innerHTML=optLocker.value;
+            }
+
+
+            if(optDeluxe.checked){                                            //room type
+                droomType.innerHTML=optDeluxe.value;
+            }else if(optSuite.checked){
+                droomType.innerHTML=optSuite.value;
+
+
+            }
+            document.getElementById("dbalance").innerHTML=advanceAmount-Tm;
+
+            document.getElementById("Tm").innerHTML=Tm;
+           document.getElementById("cc").focus();
+
+
+
+        }
+
+
+
+
+
+    function Name() {
+    var customerName = document.getElementById("customerName").value;       // name function
+    var errorMessage = document.getElementById("namer");
+
+    if (customerName === "") {
+        errorMessage.style.display = "block"; // Show error message
+    } else {
+        errorMessage.style.display = "none"; // Hide error message
+    }
+}
+    function date() {                                                        //date function
+    var date = document.getElementById("checkinDate").value;
+    var dater = document.getElementById("checkinr");
+
+    if (date === "") {
+        dater.style.display = "block"; // Show error message
+    } else {
+        dater.style.display = "none"; // Hide error message
+    }
+
+}
+
+function days() {                                                              //days function
+    var days = document.getElementById("noofDays").value;
+    var daysr = document.getElementById("daysr");
+
+    if (isNaN(days)) {
+        daysr.style.display = "block"; // Show error message
+    } else {
+        daysr.style.display = "none"; // Hide error message
+    }
+
+    
+}
+
+function person(){
+    var np=document.getElementById("noofPersons").value;
+    var personsr=document.getElementById("personsr");
+    if(isNaN(np)){
+        personsr.style.display="block";
+    }else{
+        personsr.style.display="none";
+    }
+
+}
+
+function amount(){
+    var am=document.getElementById("advanceAmount").value;
+    var amtr=document.getElementById("amtr");
+    if(isNaN(am)){
+        amtr.style.display="block";
+    }else{
+        amtr.style.display="none";
+    }
+
+}
+
+
+
+            
+
+
+
+        
+    </script>
+    <style type="text/css">
+        input:required+div{
+            color:red;
+            display:none;
+        }
+        input:valid+#namer{
+            display:none;
+        }
+        #rr{
+            display:block;
+            justify-content: center;
+            align-items: center;
+            margin-left: 150px;
+        }
+        #mainh{
+            background-color: gold;
+        }
+    </style>
+
+</head>
+<body class="m-1 ">
+    <div id="rr" class="w-75 d-block justify-content-center">
+    <header>
+        <div id="mainh" class=" border border-4 border-black text-center p-2">
+            <h4>Hotel TAJ Registion Form</h4>
+        </div>
+    </header>
+    <section>
+        <div >
+            <div class="mt-1 bg-dark text-light border border-4 border-black text-center ">
+                <h5>Customer Info</h5>
+            </div>
+
+            <div class="border border-4 border-black mt-2 justify-content-center d-flex align-items-center">
+                <dl class="row mt-3 ms-3 ">
+                    <dt class="col-2">Customer Name</dt>
+                    <dd class="col-10"><input type="text" required onkeyup="Name()" placeholder="Your name" class="form-control w-25"id="customerName">
+                        <div id="namer">User Name required</div>
+                    </dd>
+
+                    <dt class="col-2">Check in Date</dt>
+                    <dd class="col-10"><input type="date"  required class="form-control w-25 " onchange="date()"   id="checkinDate">
+                        <div id="checkinr">check in Date required</div>
+                    </dd>
+
+                    <dt class="col-2">No of Days </dt>
+                    <dd class="col-10"><input type="number" required onkeyup="days()" placeholder=" only 1-4 days" class="form-control w-25"id="noofDays">
+                        <div id="daysr">No of Days required</div>
+                    </dd>
+
+                    <dt class="col-2">No of Persons</dt>
+                    <dd class="col-10"><input type="number" required onkeyup="person()" placeholder="maximum 4 persons" class="form-control w-25"  id="noofPersons">
+                        <div id="personsr">No of Days required</div>
+
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="mt-1 bg-dark text-light border border-4 border-black text-center">
+                <h5>Select Room Type</h5>
+            </div>
+
+            <div id="r"class="justify-content-around d-flex border border-4 border-black mt-1 p-3">
+                <div >
+                    <img src="https://www.parkregiskriskin.ae/wp-content/uploads/2024/04/prkk-room-only-offer.jpeg" class="rounded rounded-3" width="150px">
+
+                    <div>
+                        <input type="radio" id="optDeluxe" name="roomSelect" value="Deluxe Room">
+                         <label for="optDeluxe">Deluxe Room</label>
+
+                    </div>
+                </div>
+
+                <div  >
+                    <img src="https://www.area83.in/ElementImages/5bf8a789-2234-4321-921d-da46e0660d3b_rgallery.jpg" class="rounded rounded-3" width="150px">
+
+                    <div>
+                        <input type="radio" id="optSuite" name="roomSelect" value="Suite Room">
+                    <label for="optSuite">Suite Room</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-1 bg-dark text-light border border-4 border-black text-center">
+                <h5>Select Amenities</h5>
+            </div>
+            <div class="justify-content-around d-flex border border-4 border-black mt-1 p-3">
+                <div >
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUi_aDMge6p1nkePtRMrXmTDu4Yz-5qm4XJA&s" class="rounded rounded-3" height="100px" width="150px">
+
+                    <div>
+                        <input type="checkbox" id="optAC" name="acr" value="AC">
+                         <label for="optAC">A/C</label>
+
+                    </div>
+                </div>
+
+                <div  >
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkoyKmC6DR-98Ny2V08j6qIJPexgZYKnZFYg&s" class="rounded rounded-3" width="150px">
+
+                    <div>
+                        <input type="checkbox" id="optLocker" name="lockerr" value="Locker">
+                    <label for="optLocker">Locker</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-1 bg-dark text-light border border-4 border-black text-center">
+                <h5>Advance Amount</h5>
+            </div>
+
+            <div class="border border-4 border-black mt-2 p-3">
+                <d class="justify-content-center d-flex">
+                    <dt >Advance Amount</dt>
+                    <dd ><input type="text" onkeyup="amount()" class="ms-1"required id="advanceAmount">
+                        <div id="amtr">Advance Amount is Mandatory</div>
+                    </dd>
+                    
+                </dl>
+            </div>
+            <div class="mt-2 p-3 justify-content-center d-flex">
+                <button class="btn btn-warning w-25" onclick="registerClick()">Register</button>      <!--button-->
+            </div>
+
+            <div id="cc" tabindex="-1" class="border border-4 border-black mt-2 p-3">
+                <dl class="row">
+                    <dt class="col-3">Customer Name</dt>
+                    <dd class="col-9" required id="dcustomerName"></dd>
+
+                    <dt class="col-3">Check In Date </dt>
+                    <dd class="col-9" id="dcheckinDate"></dd>
+
+                    <dt class="col-3">Total No of Days</dt>
+                    <dd class="col-9" id="ddays"></dd>
+
+                    <dt class="col-3">Total No of Persons</dt>
+                    <dd class="col-9" id="dpersons"></dd>
+
+                    <dt class="col-3">Room Type</dt>
+                    <dd class="col-9" id="droomType"></dd>
+
+                    <dt class="col-3">Amenities</dt>
+                    <dd class="col-9" id="damenities"></dd>
+
+                    <dt class="col-3">Advance Amount</dt>
+                    <dd class="col-9" id="dadvance"></dd>
+
+                    <dt class="col-3">Balance Amount</dt>
+                    <dd class="col-9" id="dbalance"></dd>
+
+                    <dt class="col-3">Total Amount</dt>
+                    <dd class="col-9" id="Tm"></dd>
+
+
+                </dl>
+
+            </div>
+
+        </div>
+
+    </section>
+   </div> 
+</body>
+</html>
